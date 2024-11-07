@@ -1,0 +1,23 @@
+name: EC2 Provisioning Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Triggers when a commit is pushed to the main branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+
+      - name: Initialize Terraform
+        run: terraform init
+
+      - name: Apply Terraform Plan
+        run: terraform apply -auto-approve
